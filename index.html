@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SS AGRO SERVICES</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Primary">
+        <div class="brand">
+          <div class="brand-mark">SS</div>
+          <div>
+            <strong>SS AGRO</strong>
+            <span>SERVICES</span>
+          </div>
+        </div>
+        <nav class="nav" id="nav">
+          <button class="nav-item active" data-view="dashboard">Dashboard</button>
+          <button class="nav-item" data-view="herd">Herd</button>
+          <button class="nav-item" data-view="health">Health</button>
+          <button class="nav-item" data-view="breeding">Breeding</button>
+          <button class="nav-item" data-view="milk">Milk</button>
+          <button class="nav-item" data-view="tasks">Tasks</button>
+          <button class="nav-item" data-view="finance">Finance</button>
+          <button class="nav-item" data-view="reports">Reports</button>
+        </nav>
+        <div class="storage-panel">
+          <span>Saved on this device</span>
+          <button id="exportBtn" type="button">Export</button>
+          <label class="import-label">
+            Import
+            <input id="importInput" type="file" accept="application/json" />
+          </label>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Farm operations</p>
+            <h1 id="pageTitle">Dashboard</h1>
+          </div>
+          <div class="top-actions">
+            <div class="search">
+              <span aria-hidden="true">Search</span>
+              <input id="searchInput" type="search" placeholder="Tag, breed, status, note" />
+            </div>
+            <button class="primary" id="quickAddBtn" type="button">Add goat</button>
+          </div>
+        </header>
+
+        <section class="view active" id="dashboardView">
+          <div class="stats-grid" id="statsGrid"></div>
+          <div class="dashboard-grid">
+            <section class="panel">
+              <div class="panel-head">
+                <h2>Today</h2>
+                <button class="ghost" data-view-shortcut="tasks" type="button">Open tasks</button>
+              </div>
+              <div id="todayList" class="stack-list"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h2>Herd Watch</h2>
+                <button class="ghost" data-view-shortcut="health" type="button">Health log</button>
+              </div>
+              <div id="watchList" class="stack-list"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="herdView">
+          <div class="section-toolbar">
+            <div>
+              <h2>Herd Records</h2>
+              <p>Track tags, breed, weight, status, ownership, and notes.</p>
+            </div>
+            <button class="primary" data-open-modal="goat" type="button">New goat</button>
+          </div>
+          <div id="herdGrid" class="card-grid"></div>
+        </section>
+
+        <section class="view" id="healthView">
+          <div class="section-toolbar">
+            <div>
+              <h2>Health Log</h2>
+              <p>Vaccinations, treatments, hoof work, deworming, checks, and follow-ups.</p>
+            </div>
+            <button class="primary" data-open-modal="health" type="button">Add record</button>
+          </div>
+          <div id="healthTimeline" class="timeline"></div>
+        </section>
+
+        <section class="view" id="breedingView">
+          <div class="section-toolbar">
+            <div>
+              <h2>Breeding</h2>
+              <p>Pairings, pregnancy checks, kidding dates, and birth outcomes.</p>
+            </div>
+            <button class="primary" data-open-modal="breeding" type="button">Add breeding</button>
+          </div>
+          <div id="breedingTable" class="data-table"></div>
+        </section>
+
+        <section class="view" id="milkView">
+          <div class="section-toolbar">
+            <div>
+              <h2>Milk Production</h2>
+              <p>Daily yield by doe with herd totals and seven-day trends.</p>
+            </div>
+            <button class="primary" data-open-modal="milk" type="button">Add milk</button>
+          </div>
+          <div class="milk-layout">
+            <section class="panel">
+              <h2>Seven-Day Yield</h2>
+              <div id="milkChart" class="bar-chart"></div>
+            </section>
+            <section class="panel">
+              <h2>Recent Entries</h2>
+              <div id="milkList" class="stack-list"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="tasksView">
+          <div class="section-toolbar">
+            <div>
+              <h2>Task Board</h2>
+              <p>Upcoming care, breeding, supplies, repairs, and reminders.</p>
+            </div>
+            <button class="primary" data-open-modal="task" type="button">Add task</button>
+          </div>
+          <div id="taskBoard" class="task-board"></div>
+        </section>
+
+        <section class="view" id="financeView">
+          <div class="section-toolbar">
+            <div>
+              <h2>Finance</h2>
+              <p>Income, feed, medicine, breeding fees, sales, labor, and supplies.</p>
+            </div>
+            <button class="primary" data-open-modal="finance" type="button">Add entry</button>
+          </div>
+          <div class="finance-layout">
+            <div id="financeStats" class="stats-grid compact"></div>
+            <div id="financeList" class="data-table"></div>
+          </div>
+        </section>
+
+        <section class="view" id="reportsView">
+          <div class="section-toolbar">
+            <div>
+              <h2>Reports</h2>
+              <p>Practical summaries for herd decisions and daily planning.</p>
+            </div>
+            <button class="primary" id="printBtn" type="button">Print</button>
+          </div>
+          <div id="reportsGrid" class="reports-grid"></div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="entryModal">
+      <form method="dialog" class="modal-card" id="entryForm">
+        <div class="modal-head">
+          <h2 id="modalTitle">Add record</h2>
+          <button class="icon-button" value="cancel" type="submit" formnovalidate aria-label="Close">X</button>
+        </div>
+        <div id="modalFields" class="form-grid"></div>
+        <menu class="modal-actions">
+          <button class="ghost" value="cancel" type="submit" formnovalidate>Cancel</button>
+          <button class="primary" id="saveEntryBtn" value="default" type="submit">Save</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
